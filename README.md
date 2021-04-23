@@ -2,16 +2,24 @@
 A web application (using the MERN stack) written to connect with Plaid and display transaction information.
 
 ## To run:
-Server:
-1. ``cd server``
-2. ``npm i``
-3. ``npm run start``
+This project utilizes Docker and docker-compose for easier development and deployment.
 
-Client:
-1. ``cd client``
-2. ``npm i --legacy-peer-deps``
-    * The legacy-peer-deps flag is currently needed for installing the Plaid Link bindings for React currently being used. These bindings are optional and are not required for a production environment.
-2. ``npm run start``
+* To run this project for development, execute:
+`docker-compose -f docker-compose.yml -f docker-compose.dev.yml up`
 
-The client is currently configured to proxy to localhost:5000 for calls to /api endpoints.
-This should be replaced with a webserver proxy when used in production environments.
+* To run this project for production, execute:
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml up`
+
+The dev site can then be reached at http://localhost or https://mysite.com by adding the URL to your machine's /etc/hosts file.
+
+## To stop:
+Either configuration can be stopped by using CTRL+C in the attached terminal session or by running the same command but replacing `up` with `down`
+
+## Configuration:
+Environment variables and SSL certificates will need to be replaced in the docker-compose.*.yml files.
+- PLAID_CLIENT_ID
+- PLAID_SECRET
+- PLAID_ENVIRONMENT
+- PUBLIC_URL
+
+

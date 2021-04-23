@@ -1,27 +1,12 @@
 version: "3"
 services:
-  plaid-proxy:
-    depends_on:
-      - plaid-web
-      - plaid-server
-    build: proxy
-    ports:
-      - "443:443"
-    environment:
-      - ENABLE_IPV6=true
-    networks:
-      - mern-app
-      - default
-    restart: always
-
   plaid-web:
-    build: web
+    build:
+      context: web/
+      dockerfile: Dockerfile.dev
     command: npm run start
     environment:
-      PORT: 3000
       NODE_ENV: development
-    networks:
-      - mern-app
     depends_on:
       - plaid-server
     volumes:
@@ -42,9 +27,6 @@ services:
       PLAID_ENVIRONMENT: sandbox
       MONGO_USER: user
       MONGO_PASSWORD: pass
-    networks:
-      - mern-app
-      - default
     depends_on:
       - mongo
     volumes:

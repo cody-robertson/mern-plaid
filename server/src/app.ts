@@ -4,9 +4,11 @@ import mongoose from "mongoose"
 import settings from "../config/config"
 
 const mongoSettings = settings.MongoSettings;
-
-mongoose.connect(`mongodb://${mongoSettings.User}:${mongoSettings.Password}@${mongoSettings.IP}:${mongoSettings.Port}/?authSource=admin`, {
+const mongoUrl = `mongodb://${mongoSettings.User}:${mongoSettings.Password}@${mongoSettings.IP}:${mongoSettings.Port}/?authSource=admin`
+mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
 })
     .then(() => console.log('Connected to MongoDB!'))
     .catch((e) => console.log(e));
@@ -17,6 +19,7 @@ class App {
 
     constructor(appInit: { port: number; middleWares: any; controllers: any; }) {
         this.app = express()
+        this.app.enable('trust proxy'); // must be enabled for nginx headers
         this.port = appInit.port
 
         this.middlewares(appInit.middleWares)

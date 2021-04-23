@@ -14,7 +14,6 @@ const app = new App({
     middleWares: [
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
-    ]
-})
-
+    ],
+});
 app.listen()

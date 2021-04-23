@@ -1,9 +1,12 @@
 version: "3"
 services:
-  plaid-proxy:
+  nginx:
     restart: always
 
   plaid-web:
+    build:
+      context: web/
+      dockerfile: Dockerfile.prod
     environment:
       NODE_ENV: production
     restart: always

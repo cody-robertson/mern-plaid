@@ -1,0 +1,10 @@
+FROM node:15-alpine as build
+WORKDIR /app
+COPY package*.json ./
+# Don't install dev packages in production
+RUN npm install
+COPY . ./
+CMD [ "npm", "run", "build" ]
+
+FROM nginx as serve
+COPY --from=build /app/build /usr/share/nginx/html
